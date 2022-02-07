@@ -1,3 +1,6 @@
+/* Funções de validação do proprio sequelize
+Source: https://sequelize.org/master/manual/validations-and-constraints.html#-code-allownull--code--interaction-with-other-validators */
+
 const displayNameValidator = {
   notEmpty: true,
   len: {

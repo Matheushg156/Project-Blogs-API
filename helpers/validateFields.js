@@ -30,8 +30,16 @@ const passwordValidator = {
   },
 };
 
+const userAlredyExists = (error) => {
+  const { path, validatorKey } = error[0];
+  if (path === 'email' && validatorKey === 'unique') {
+    return { code: 409, message: 'User already registered' };
+  }
+};
+
 module.exports = {
   displayNameValidator,
   emailValidator,
   passwordValidator,
+  userAlredyExists,
 };

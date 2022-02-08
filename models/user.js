@@ -5,11 +5,11 @@ const {
 } = require('../helpers/validateFields');
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('Users', {
+  const User = sequelize.define('User', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     displayName: { type: DataTypes.STRING, allowNull: false, validate: displayNameValidator,
     },
-    email: { type: DataTypes.STRING, allowNull: false, validate: emailValidator },
+    email: { type: DataTypes.STRING, allowNull: false, unique: true, validate: emailValidator },
     password: { type: DataTypes.STRING, allowNull: false, validate: passwordValidator },
     image: DataTypes.STRING,
   },

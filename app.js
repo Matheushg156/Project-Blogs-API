@@ -7,6 +7,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.post('/user', UserController.createUser);
+app.route('/user').post(UserController.createUser);
 
 module.exports = app;

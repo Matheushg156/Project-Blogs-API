@@ -14,13 +14,6 @@ const emailValidator = {
   isEmail: {
     msg: '"email" must be a valid email',
   },
-  unique: {
-    args: {
-      model: 'Users',
-      field: 'email',
-    },
-    msg: 'User already registeredd',
-  },
   notNull: {
     msg: '"email" is required',
   },

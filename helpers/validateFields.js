@@ -26,7 +26,7 @@ const passwordValidator = {
   },
   len: {
     args: [6],
-    msg: '"password" length must be at least 6 characters long',
+    msg: '"password" length must be 6 characters long',
   },
 };
 

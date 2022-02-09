@@ -9,11 +9,11 @@ const createUser = async (req, res) => {
     algorithm: 'HS256',
   };
   const user = await UserServices.validateUser({ displayName, email, password, image });
+  console.log('AQIIIIIIII', user);
   if (!user.errors) {
     const token = jwt.sign({ data: user }, process.env.JWT_SECRET, jwtConfig);
     res.status(201).json({ token });
-  } else if (user.errors[0].message === 'email must be unique'
-  || user.errors[0].message === 'Users.email must be unique') {
+  } else if (user.errors[0].type === 'unique violation') {
     res.status(409).json({ message: 'User already registered' });
   } else {
     res.status(400).json({ message: user.errors[0].message });

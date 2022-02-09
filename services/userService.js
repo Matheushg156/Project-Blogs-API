@@ -6,7 +6,6 @@ const validateUser = async (userInfos) => {
     const user = await User.create({ displayName, password, email, image });
     return user;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };

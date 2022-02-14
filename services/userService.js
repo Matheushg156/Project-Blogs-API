@@ -4,7 +4,7 @@ const { errors, blankedField, emptyField } = require('../helpers/validateFields'
 const validateEmail = (email) => {
   switch (true) {
     case blankedField(email): return { code: 400, message: errors.blankedEmail };
-    case emptyField(email): return { code: 422, message: errors.emptyEmail };
+    case emptyField(email): return { code: 400, message: errors.emptyEmail };
     default: return false;
   }
 };
@@ -12,7 +12,7 @@ const validateEmail = (email) => {
 const validatePassword = (password) => {
   switch (true) {
     case blankedField(password): return { code: 400, message: errors.blankedPassword };
-    case emptyField(password): return { code: 422, message: errors.emptyPassword };
+    case emptyField(password): return { code: 400, message: errors.emptyPassword };
     default: return false;
   }
 };
@@ -20,7 +20,7 @@ const validatePassword = (password) => {
 const validateFields = async (email, password) => {
   const validUser = await User.findOne({ where: { email, password } });
   if (!validUser) {
-    return { code: 400, message: errors.emptyPassword };
+    return { code: 400, message: errors.invalidFields };
   }
   return false;
 };

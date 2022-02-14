@@ -6,10 +6,10 @@ const errors = {
   emptyEmail: '"email" is not allowed to be empty',
   blankedPassword: '"password" is required',
   emptyPassword: '"password" is not allowed to be empty',
-  invalidFields: 'invalid fields',
+  invalidFields: 'Invalid fields',
 };
 
-const blankedField = (field) => (!field);
+const blankedField = (field) => (!field && field !== '');
 
 const emptyField = (field) => (field === '');
 

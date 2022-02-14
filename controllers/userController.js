@@ -1,16 +1,12 @@
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const UserServices = require('../services/userService');
+const createToken = require('../helpers/createToken');
 
 const createUser = async (req, res) => {
   const { displayName, email, password, image } = req.body;
-  const jwtConfig = {
-    expiresIn: '1d',
-    algorithm: 'HS256',
-  };
   const user = await UserServices.validateUser({ displayName, email, password, image });
   if (!user.errors) {
-    const token = jwt.sign({ data: user.email }, process.env.JWT_SECRET, jwtConfig);
+    const token = createToken(user.email);
     res.status(201).json({ token });
   } else if (user.errors[0].type === 'unique violation') {
     res.status(409).json({ message: 'User already registered' });
@@ -46,9 +42,16 @@ const validateFields = async (req, res, next) => {
   next();
 };
 
+const login = async (req, res) => {
+  const { email } = req.body;
+  const token = createToken(email);
+  res.status(200).json({ token });
+};
+
 module.exports = {
   createUser,
   validateEmail,
   validatePassword,
   validateFields,
+  login,
 };

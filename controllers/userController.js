@@ -9,9 +9,8 @@ const createUser = async (req, res) => {
     algorithm: 'HS256',
   };
   const user = await UserServices.validateUser({ displayName, email, password, image });
-  console.log('AQIIIIIIII', user);
   if (!user.errors) {
-    const token = jwt.sign({ data: user }, process.env.JWT_SECRET, jwtConfig);
+    const token = jwt.sign({ data: user.email }, process.env.JWT_SECRET, jwtConfig);
     res.status(201).json({ token });
   } else if (user.errors[0].type === 'unique violation') {
     res.status(409).json({ message: 'User already registered' });
@@ -20,6 +19,36 @@ const createUser = async (req, res) => {
   }
 };
 
+const validateEmail = (req, res, next) => {
+  const { email } = req.body;
+  const isEmailInvalid = UserServices.validateEmail(email);
+  if (isEmailInvalid) {
+    return res.status(isEmailInvalid.code).json({ message: isEmailInvalid.message });
+  }
+  next();
+};
+
+const validatePassword = (req, res, next) => {
+  const { password } = req.body;
+  const isPasswordInvalid = UserServices.validatePassword(password);
+  if (isPasswordInvalid) {
+    return res.status(isPasswordInvalid.code).json({ message: isPasswordInvalid.message });
+  }
+  next();
+};
+
+const validateFields = async (req, res, next) => {
+  const { email } = req.body;
+  const isFildesValid = await UserServices.validateFields(email);
+  if (isFildesValid) {
+    return res.status(isFildesValid.code).json({ message: isFildesValid.message });
+  }
+  next();
+};
+
 module.exports = {
   createUser,
+  validateEmail,
+  validatePassword,
+  validateFields,
 };

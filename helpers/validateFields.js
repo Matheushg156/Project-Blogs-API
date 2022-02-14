@@ -9,13 +9,9 @@ const errors = {
   invalidFields: 'invalid fields',
 };
 
-const blankedField = (field, msg) => {
-  if (!field) return { code: 400, message: msg };
-};
+const blankedField = (field) => (!field);
 
-const emptyField = (field, msg) => {
-  if (field === '') return { code: 400, message: msg };
-};
+const emptyField = (field) => (field === '');
 
 const displayNameValidator = {
   notEmpty: true,

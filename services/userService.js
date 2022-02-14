@@ -17,8 +17,8 @@ const validatePassword = (password) => {
   }
 };
 
-const validateFields = async (email) => {
-  const validUser = await User.findOne({ where: email });
+const validateFields = async (email, password) => {
+  const validUser = await User.findOne({ where: { email, password } });
   if (!validUser) {
     return { code: 400, message: errors.emptyPassword };
   }

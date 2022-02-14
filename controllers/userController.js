@@ -38,8 +38,8 @@ const validatePassword = (req, res, next) => {
 };
 
 const validateFields = async (req, res, next) => {
-  const { email } = req.body;
-  const isFildesValid = await UserServices.validateFields(email);
+  const { email, password } = req.body;
+  const isFildesValid = await UserServices.validateFields(email, password);
   if (isFildesValid) {
     return res.status(isFildesValid.code).json({ message: isFildesValid.message });
   }

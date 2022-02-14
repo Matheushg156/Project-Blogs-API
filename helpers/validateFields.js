@@ -1,6 +1,22 @@
 /* Funções de validação do proprio sequelize
 Source: https://sequelize.org/master/manual/validations-and-constraints.html#-code-allownull--code--interaction-with-other-validators */
 
+const errors = {
+  blankedEmail: '"email" is required',
+  emptyEmail: '"email" is not allowed to be empty',
+  blankedPassword: '"password" is required',
+  emptyPassword: '"password" is not allowed to be empty',
+  invalidFields: 'invalid fields',
+};
+
+const blankedField = (field, msg) => {
+  if (!field) return { code: 400, message: msg };
+};
+
+const emptyField = (field, msg) => {
+  if (field === '') return { code: 400, message: msg };
+};
+
 const displayNameValidator = {
   notEmpty: true,
   len: {
@@ -34,4 +50,7 @@ module.exports = {
   displayNameValidator,
   emailValidator,
   passwordValidator,
+  errors,
+  blankedField,
+  emptyField,
 };

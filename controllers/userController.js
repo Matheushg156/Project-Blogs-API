@@ -48,10 +48,16 @@ const login = async (req, res) => {
   res.status(200).json({ token });
 };
 
+const getAllUsers = async (_req, res) => {
+  const users = await UserServices.getAllUsers();
+  return res.status(200).json(users);
+};
+
 module.exports = {
   createUser,
   validateEmail,
   validatePassword,
   validateFields,
   login,
+  getAllUsers,
 };

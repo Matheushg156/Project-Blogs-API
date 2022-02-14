@@ -35,9 +35,15 @@ const validateUser = async (userInfos) => {
   }
 };
 
+const getAllUsers = async () => {
+  const users = await User.findAll();
+  return users;
+};
+
 module.exports = {
   validateUser,
   validateEmail,
   validatePassword,
   validateFields,
+  getAllUsers,
 };

@@ -13,7 +13,6 @@ const validateToken = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, segredo);
     const user = await User.findOne({ where: { email: decoded.data } });
-    console.log('AQUIIIIII', user);
     if (!user) {
       return res
         .status(401)

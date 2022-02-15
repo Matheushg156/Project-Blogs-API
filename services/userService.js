@@ -40,10 +40,16 @@ const getAllUsers = async () => {
   return users;
 };
 
+const getUserById = async (id) => {
+  const user = await User.findOne({ where: { id } });
+  return user;
+};
+
 module.exports = {
   validateUser,
   validateEmail,
   validatePassword,
   validateFields,
   getAllUsers,
+  getUserById,
 };

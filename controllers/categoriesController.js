@@ -10,6 +10,15 @@ const createCategory = async (req, res) => {
   res.status(400).json({ message: category.errors[0].message });
 };
 
+const getCategories = async (_req, res) => {
+  const categories = await CategoriesServices.getCategories();
+  if (!categories.errors) {
+    return res.status(200).json(categories);
+  }
+  res.status(500).json({ message: categories.errors[0].message });
+};
+
 module.exports = {
   createCategory,
+  getCategories,
 };

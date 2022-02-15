@@ -10,6 +10,16 @@ const createCategory = async (categoryInfos) => {
   }
 };
 
+const getCategories = async () => {
+  try {
+    const categories = await Categories.findAll();
+    return categories;
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   createCategory,
+  getCategories,
 };

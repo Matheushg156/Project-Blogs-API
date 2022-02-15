@@ -13,7 +13,7 @@ const createCategory = async (req, res) => {
 const getCategories = async (_req, res) => {
   const categories = await CategoriesServices.getCategories();
   if (!categories.errors) {
-    return res.status(200).json(categories);
+    return res.status(200).json(categories.sort((a, b) => b.name.localeCompare(a.name)));
   }
   res.status(500).json({ message: categories.errors[0].message });
 };

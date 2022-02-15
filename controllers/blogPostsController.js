@@ -1,25 +1,28 @@
 const BlogPostsService = require('../services/blogPostsService');
 
-const findCategoriesByIds = async (req, res, next) => {
+const validateCategoriesId = async (req, res, next) => {
   const { categoriesIds } = req.body;
+  if (!categoriesIds) {
+    return res.status(400).json({ message: '"categoryIds" is required' });
+  }
   const categories = await BlogPostsService.findCategoriesByIds(categoriesIds);
   if (categories) {
-    res.status(categories.code).send(categories.message);
+    return res.status(categories.code).json(categories.message);
   }
   next();
 };
 
 const createBlogPost = async (req, res) => {
   const { title, content, categoryId } = req.body;
-  const blogPost = await BlogPostsService.createBlogPost({ title, content, categoryId });
+  const { dataValues: { id } } = req.user;
+  const blogPost = await BlogPostsService.createBlogPost({ title, content, id, categoryId });
   if (!blogPost.error) {
-    res.status(200).json(blogPost);
-  } else {
-    res.status(400).json({ message: blogPost.errors[0].message });
-  }
+    return res.status(200).json(blogPost);
+  } 
+  res.status(400).json({ message: blogPost.errors[0].message });
 };
 
 module.exports = {
   createBlogPost,
-  findCategoriesByIds,
+  validateCategoriesId,
 };

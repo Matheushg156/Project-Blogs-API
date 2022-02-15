@@ -42,6 +42,18 @@ const passwordValidator = {
   },
 };
 
+const titleValidator = {
+  notNull: {
+    msg: '"title" is required',
+  },
+};
+
+const contentValidator = {
+  notNull: {
+    msg: '"content" is required',
+  },
+};
+
 module.exports = {
   displayNameValidator,
   emailValidator,
@@ -49,4 +61,6 @@ module.exports = {
   errors,
   blankedField,
   emptyField,
+  titleValidator,
+  contentValidator,
 };

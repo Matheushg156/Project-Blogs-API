@@ -10,8 +10,8 @@ const findCategoriesByIds = async (categoriesIds) => {
 
 const createBlogPost = async (blogPostInfos) => {
   try {
-    const { title, content, categoryId } = blogPostInfos;
-    const blogPost = await BlogPosts.create({ title, content, categoryId });
+    const { title, content, userId } = blogPostInfos;
+    const blogPost = await BlogPosts.create({ title, content, userId });
     return blogPost;
   } catch (error) {
     return error;

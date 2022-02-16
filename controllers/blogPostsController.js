@@ -1,21 +1,27 @@
 const BlogPostsService = require('../services/blogPostsService');
 
 const validateCategoriesId = async (req, res, next) => {
-  const { categoriesIds } = req.body;
-  if (!categoriesIds) {
+  const { title, content, categoryIds } = req.body;
+  if (!title) {
+    return res.status(400).json({ message: '"title" is required' });
+  }
+  if (!content) {
+    return res.status(400).json({ message: '"content" is required' });
+  }
+  if (!categoryIds) {
     return res.status(400).json({ message: '"categoryIds" is required' });
   }
-  const categories = await BlogPostsService.findCategoriesByIds(categoriesIds);
+  const categories = await BlogPostsService.findCategoriesByIds(categoryIds);
   if (categories) {
-    return res.status(categories.code).json(categories.message);
+    return res.status(categories.code).json({ message: categories.message });
   }
   next();
 };
 
 const createBlogPost = async (req, res) => {
-  const { title, content, categoryId } = req.body;
+  const { title, content, categoryIds } = req.body;
   const { dataValues: { id } } = req.user;
-  const blogPost = await BlogPostsService.createBlogPost({ title, content, id, categoryId });
+  const blogPost = await BlogPostsService.createBlogPost({ title, content, id, categoryIds });
   if (!blogPost.error) {
     return res.status(201).json(blogPost);
   } 

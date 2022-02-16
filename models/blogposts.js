@@ -8,8 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     title: { type: DataTypes.STRING, allowNull: false, validate: titleValidator },
     content: { type: DataTypes.STRING, allowNull: false, validate: contentValidator },
     userId: { type: DataTypes.INTEGER, foreignKey: true },
-    published: DataTypes.DATE,
-    updated: DataTypes.DATE,
   },
   { 
     createdAt: 'published',

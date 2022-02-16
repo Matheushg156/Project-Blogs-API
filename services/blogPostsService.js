@@ -28,7 +28,7 @@ const createBlogPost = async (blogPostInfos) => {
     const categories = categoriesToPost(categoriesIds, blogPost.id);
     await PostsCategories.bulkCreate(categories);
     return {
-      id: categories.id,
+      id: blogPost.id,
       userId: id,
       title,
       content,

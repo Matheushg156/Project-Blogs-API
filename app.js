@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { createUser, validateEmail,
+const userRouter = require('./routes/userRotes');
+
+const { validateEmail,
   validateFields, validatePassword,
-  login, getAllUsers, getUserById } = require('./controllers/userController');
+  login } = require('./controllers/userController');
 const { createCategory, getCategories } = require('./controllers/categoriesController');
 const { validateCategoriesId,
   createBlogPost, getAllBlogPosts } = require('./controllers/blogPostsController');
@@ -13,9 +15,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.post('/user', createUser);
-app.get('/user', validateToken, getAllUsers);
-app.get('/user/:id', validateToken, getUserById);
+app.use('/user', userRouter);
+
 app.post('/login', validateEmail, validatePassword, validateFields, login);
 app.post('/categories', validateToken, createCategory);
 app.get('/categories', validateToken, getCategories);

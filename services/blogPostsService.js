@@ -52,8 +52,24 @@ const getAllBlogPosts = async () => {
   }
 };
 
+const getBlogPostById = async (id) => {
+  try {
+    const blogPost = await BlogPosts.findOne({
+      where: { id },
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Categories, as: 'categories', attributes: ['id', 'name'] },
+      ],
+    });
+    return blogPost;
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   createBlogPost,
   findCategoriesByIds,
   getAllBlogPosts,
+  getBlogPostById,
 };

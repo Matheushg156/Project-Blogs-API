@@ -28,7 +28,16 @@ const createBlogPost = async (req, res) => {
   res.status(400).json({ message: blogPost.errors[0].message });
 };
 
+const getAllBlogPosts = async (req, res) => {
+  const blogPosts = await BlogPostsService.getAllBlogPosts();
+  if (!blogPosts.error) {
+    return res.status(200).json(blogPosts);
+  }
+  res.status(400).json({ message: blogPosts.errors[0].message });
+};
+
 module.exports = {
   createBlogPost,
   validateCategoriesId,
+  getAllBlogPosts,
 };

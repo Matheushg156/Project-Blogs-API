@@ -4,10 +4,11 @@ const validateToken = require('../helpers/validateToken');
 const { validateCategoriesId, createBlogPost, 
   getAllBlogPosts, getBlogPostById, validateUpdateBlogPost,
   userAuthorized, updateBlogPost,
-  getPostById, deleteBlogPost } = require('../controllers/blogPostsController');
+  getPostById, deleteBlogPost, getPostBySearch } = require('../controllers/blogPostsController');
 
 const postRouter = express.Router();
 
+postRouter.get('/search', validateToken, getPostBySearch);
 postRouter.post('/', validateToken, validateCategoriesId, createBlogPost);
 postRouter.get('/', validateToken, getAllBlogPosts);
 postRouter.get('/:id', validateToken, getBlogPostById);

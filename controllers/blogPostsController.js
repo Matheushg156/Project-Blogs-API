@@ -96,6 +96,12 @@ const deleteBlogPost = async (req, res) => {
   res.status(204).end();
 };
 
+const getPostBySearch = async (req, res) => {
+  const { q } = req.query;
+  const blogPosts = await BlogPostsService.getPostBySearch(q);
+  res.status(200).json(blogPosts);
+};
+
 module.exports = {
   createBlogPost,
   validateCategoriesId,
@@ -106,4 +112,5 @@ module.exports = {
   updateBlogPost,
   getPostById,
   deleteBlogPost,
+  getPostBySearch,
 };

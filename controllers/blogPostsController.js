@@ -81,15 +81,19 @@ const updateBlogPost = async (req, res) => {
   }
 };
 
+const getPostById = async (req, res, next) => {
+  const { id } = req.params;
+  const blogPost = await BlogPostsService.getBlogPostById(id);
+  if (!blogPost) {
+    return res.status(404).json({ message: 'Post does not exist' });
+  }
+  next();
+};
+
 const deleteBlogPost = async (req, res) => {
   const { id } = req.params;
-  const blogPost = await BlogPostsService.deleteBlogPost(id);
-  if (blogPost) {
-    return res.status(200).end();
-  }
-  if (blogPost.code) {
-    return res.status(blogPost.code).json({ message: blogPost.message });
-  }
+  await BlogPostsService.deleteBlogPost(id);
+  res.status(204).end();
 };
 
 module.exports = {
@@ -100,5 +104,6 @@ module.exports = {
   validateUpdateBlogPost,
   userAuthorized,
   updateBlogPost,
+  getPostById,
   deleteBlogPost,
 };

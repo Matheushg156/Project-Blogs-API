@@ -80,11 +80,12 @@ const updateBlogPost = async (blogPostInfos) => {
 };
 
 const deleteBlogPost = async (id) => {
-  const blogPost = await BlogPosts.destroy({ where: { id } });
-  if (blogPost) {
-    return true;
+  try {
+    const blogPost = await BlogPosts.destroy({ where: { id } });
+    return blogPost;
+  } catch (error) {
+    return error;
   }
-  return { code: 404, message: 'Post does not exist' };
 };
 
 module.exports = {

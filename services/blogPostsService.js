@@ -79,10 +79,19 @@ const updateBlogPost = async (blogPostInfos) => {
   }
 };
 
+const deleteBlogPost = async (id) => {
+  const blogPost = await BlogPosts.destroy({ where: { id } });
+  if (blogPost) {
+    return true;
+  }
+  return { code: 404, message: 'Post does not exist' };
+};
+
 module.exports = {
   createBlogPost,
   findCategoriesByIds,
   getAllBlogPosts,
   getBlogPostById,
   updateBlogPost,
+  deleteBlogPost,
 };

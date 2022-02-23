@@ -81,6 +81,17 @@ const updateBlogPost = async (req, res) => {
   }
 };
 
+const deleteBlogPost = async (req, res) => {
+  const { id } = req.params;
+  const blogPost = await BlogPostsService.deleteBlogPost(id);
+  if (blogPost) {
+    return res.status(200).end();
+  }
+  if (blogPost.code) {
+    return res.status(blogPost.code).json({ message: blogPost.message });
+  }
+};
+
 module.exports = {
   createBlogPost,
   validateCategoriesId,
@@ -89,4 +100,5 @@ module.exports = {
   validateUpdateBlogPost,
   userAuthorized,
   updateBlogPost,
+  deleteBlogPost,
 };

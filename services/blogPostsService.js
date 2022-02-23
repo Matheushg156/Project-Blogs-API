@@ -16,11 +16,6 @@ const categoriesToPost = (categoryIds, blogPostId) => {
   return categories;
 };
 
-/* 
-Adicionar varios posts ao mesmo tempo:
-Source: https://sebhastian.com/sequelize-bulk-create/#:~:text=When%20you%20need%20to%20insert,with%20a%20single%20function%20call.
-*/
-
 const createBlogPost = async (blogPostInfos) => {
   try {
     const { title, content, id, categoryIds } = blogPostInfos;

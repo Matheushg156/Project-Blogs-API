@@ -62,10 +62,21 @@ const validateUpdateBlogPost = async (req, res, next) => {
   next();
 };
 
+const userAuthorized = async (req, res, next) => {
+  const { id } = req.params;
+  const { dataValues: { id: userId } } = req.user;
+  const blogPost = await BlogPostsService.getBlogPostById(id);
+  if (blogPost.userId !== userId) {
+    return res.status(401).json({ message: 'Unauthorized user' });
+  }
+  next();
+};
+
 module.exports = {
   createBlogPost,
   validateCategoriesId,
   getAllBlogPosts,
   getBlogPostById,
   validateUpdateBlogPost,
+  userAuthorized,
 };

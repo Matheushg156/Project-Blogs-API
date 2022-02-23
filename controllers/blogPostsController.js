@@ -72,6 +72,15 @@ const userAuthorized = async (req, res, next) => {
   next();
 };
 
+const updateBlogPost = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const blogPost = await BlogPostsService.updateBlogPost({ id, title, content });
+  if (blogPost) {
+    return res.status(200).json(blogPost);
+  }
+};
+
 module.exports = {
   createBlogPost,
   validateCategoriesId,
@@ -79,4 +88,5 @@ module.exports = {
   getBlogPostById,
   validateUpdateBlogPost,
   userAuthorized,
+  updateBlogPost,
 };

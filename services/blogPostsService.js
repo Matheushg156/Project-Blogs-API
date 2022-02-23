@@ -62,9 +62,27 @@ const getBlogPostById = async (id) => {
   }
 };
 
+const updateBlogPost = async (blogPostInfos) => {
+  const { id, title, content } = blogPostInfos;
+  const blogPost = await BlogPosts.update(
+    { title, content },
+    { where: { id } },
+  );
+  if (blogPost) {
+    const getBlogPost = await BlogPosts.findOne({
+      where: { id },
+      include: [
+        { model: Categories, as: 'categories', attributes: ['id', 'name'] },
+      ],
+    });
+    return getBlogPost;
+  }
+};
+
 module.exports = {
   createBlogPost,
   findCategoriesByIds,
   getAllBlogPosts,
   getBlogPostById,
+  updateBlogPost,
 };

@@ -1,4 +1,5 @@
 const express = require('express');
+const rescue = require('express-rescue');
 
 const validateToken = require('../helpers/validateToken');
 const { validateCategoriesId, createBlogPost, 
@@ -8,11 +9,16 @@ const { validateCategoriesId, createBlogPost,
 
 const postRouter = express.Router();
 
-postRouter.get('/search', validateToken, getPostBySearch);
-postRouter.post('/', validateToken, validateCategoriesId, createBlogPost);
-postRouter.get('/', validateToken, getAllBlogPosts);
-postRouter.get('/:id', validateToken, getBlogPostById);
-postRouter.put('/:id', validateToken, userAuthorized, validateUpdateBlogPost, updateBlogPost);
-postRouter.delete('/:id', validateToken, getPostById, userAuthorized, deleteBlogPost);
+postRouter.get('/search', rescue(validateToken, getPostBySearch));
+postRouter.post('/', rescue(validateToken, validateCategoriesId, createBlogPost));
+postRouter.get('/', rescue(validateToken, getAllBlogPosts));
+postRouter.get('/:id', rescue(validateToken, getBlogPostById));
+postRouter.put('/:id', rescue(
+  validateToken,
+  userAuthorized,
+  validateUpdateBlogPost,
+  updateBlogPost,
+  ));
+postRouter.delete('/:id', rescue(validateToken, getPostById, userAuthorized, deleteBlogPost));
 
 module.exports = postRouter;

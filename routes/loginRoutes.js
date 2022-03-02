@@ -1,4 +1,5 @@
 const express = require('express');
+const rescue = require('express-rescue');
 
 const { validateEmail,
   validateFields, validatePassword,
@@ -6,6 +7,6 @@ const { validateEmail,
 
 const loginRouter = express.Router();
 
-loginRouter.post('/', validateEmail, validatePassword, validateFields, login);
+loginRouter.post('/', rescue(validateEmail, validatePassword, validateFields, login));
 
 module.exports = loginRouter;

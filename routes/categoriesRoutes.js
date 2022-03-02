@@ -1,4 +1,5 @@
 const express = require('express');
+const rescue = require('express-rescue');
 
 const validateToken = require('../helpers/validateToken');
 const { createCategory,
@@ -6,7 +7,7 @@ const { createCategory,
 
 const categoriesRouter = express.Router();
 
-categoriesRouter.post('/', validateToken, createCategory);
-categoriesRouter.get('/', validateToken, getCategories);
+categoriesRouter.post('/', rescue(validateToken, createCategory));
+categoriesRouter.get('/', rescue(validateToken, getCategories));
 
 module.exports = categoriesRouter;
